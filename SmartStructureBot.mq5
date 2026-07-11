@@ -658,7 +658,31 @@ void DrawStructureSwing(int swing)
    ObjectSetInteger(0,labelName,OBJPROP_COLOR,clrWhite);
    ObjectSetInteger(0,labelName,OBJPROP_FONTSIZE,9);
   }
+//+------------------------------------------------------------------+
+//| Draw Structure Line                                              |
+//+------------------------------------------------------------------+
+void DrawStructureLine(int first, int second)
+{
+   string name = "StructureLine_" + IntegerToString(first);
 
+   if(ObjectFind(0,name)>=0)
+      ObjectDelete(0,name);
+
+   ObjectCreate(
+      0,
+      name,
+      OBJ_TREND,
+      0,
+      PriceData[StructureSwings[first].index].time,
+      StructureSwings[first].price,
+      PriceData[StructureSwings[second].index].time,
+      StructureSwings[second].price
+   );
+
+   ObjectSetInteger(0,name,OBJPROP_RAY_RIGHT,false);
+   ObjectSetInteger(0,name,OBJPROP_WIDTH,2);
+   ObjectSetInteger(0,name,OBJPROP_COLOR,clrSilver);
+}
 //+------------------------------------------------------------------+
 //| Detect Candidate Swings                                          |
 //+------------------------------------------------------------------+
